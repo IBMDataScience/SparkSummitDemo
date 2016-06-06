@@ -1,0 +1,437 @@
+---
+title: "IBM Data Science Experience"
+runtime: shiny
+logo: scix.png
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    source_code: https://github.com/IBMDataScience/SparkSummitDemo
+    social: [ "twitter", "facebook", "linkedin" ]
+
+    
+---
+
+Data Exploration 
+=====================================
+
+```{r setup, include=FALSE}
+
+
+### Run this first before Knitting the RMD ##############
+if(!require(devtools)){
+    install.packages("devtools")
+    library(devtools)
+}
+
+if(!require(flexdashboard)){
+    install_github("gfilla/flexdashboard")
+    library(flexdashboard)
+}
+
+########################################################
+
+#check for packages install if necessary
+packages <- function(x){
+  x <- as.character(match.call()[[2]])
+  if (!require(x,character.only=TRUE)){
+    install.packages(pkgs=x,repos="http://cran.r-project.org")
+    require(x,character.only=TRUE)
+  }
+}
+packages(shiny)
+packages(leaflet)
+packages(rbokeh)
+packages(ggplot2)
+packages(knitr)
+packages(dplyr)
+packages(plotly)
+packages(xts)
+packages(dygraphs)
+packages(png)
+packages(RCurl)
+library(devtools)
+library(shiny)
+library(flexdashboard)
+library(leaflet)
+library(rbokeh)
+library(ggplot2)
+library(knitr)
+library(dplyr)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(png)
+library(RCurl)
+
+#setwd('/srv/shiny-server/shinyDemo')
+setwd('~/')#home 
+
+datdf <- getURL('https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/data/clusterEnergyLocation.csv')
+df <- read.csv(text = datdf)
+
+#Jitter buildings that are at same lat/long
+df$Lat <- round(jitter(df$Lat, factor = 0.00001),5)
+df$Long<- round(jitter(df$Long, factor = 0.00001),5)
+
+
+df$kmeans_label <- df$kmeans_label + 1
+df$kmeans_label <- as.factor(df$kmeans_label)
+df$ReClustering <- df$ReClustering+1
+df$ReClustering <- as.factor(df$ReClustering)
+
+df$plugChg <-mean(df$plug_load_consumption)/df$plug_load_consumption  - 1
+df$acChg <- mean(df$ac_consumption)/df$ac_consumption - 1
+df$domesticChg <-mean(df$domestic_gas)/df$domestic_gas - 1
+df$heatingChg <-mean(df$heating_gas)/df$heating_gas - 1
+df$EnergySurplus <- round(((1*(df$plugChg + df$acChg + df$domesticChg + df$heatingChg))/4)*100,0)
+
+df$billValues <- gsub('\\$','', df$Annual.Energy.Bill..USD.)
+df$billValues <- gsub(',','', df$billValues)
+df$billValues <- as.numeric(gsub(' ','', df$billValues))
+
+dat <- getURL('https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/data/CombinedSensorData.csv')
+allSensors <- read.csv(text = dat)
+
+allSensors$Unitarian.s <- as.POSIXct(allSensors$Unitarian.s,format='%m/%d/%Y %H:%M')
+temps <- data.frame(allSensors$Unitarian.s, allSensors$Unitarian.t, allSensors$Parish.t, allSensors$Basement.t,allSensors$Office.t)
+colnames(temps) <- c('Time','SanctuaryTemp','ParishTemp','BasementTemp','OfficeTemp')
+t<- temps[,-1]
+allTemps <- xts(t,order.by = temps$Time)
+
+#function used for scoring
+scoreProperty <- function(num_stories,sq_feet, num_plugged_equipment){
+    # b's come from regression model
+    # n's come from normalization
+    b0 = -0.030743500313
+    b2 = 0.0285973339538 
+    b3 = 0.668102284559 
+    b4 = 0.374074888107
+    
+    n0 = 380400.00
+    n2 = 4.00
+    n3 = 65000.00
+    n4 = 43.00
+
+    x2 = num_stories/n2
+    x3 = sq_feet/n3
+    x4 = num_plugged_equipment/n4
+    energy = b0 + b2 * x2 + b3 * x3 + b4 * x4
+    kWh = energy*n0
+    usd = kWh*0.18 # $0.18 per kWh in NYC (on average)
+    return(c(kWh, usd))
+  }
+
+
+```
+
+Row {data-height=200}
+-----------------------------------------------------------------------
+
+### ![blocpower](blocpowertransp.png) Build a Better World.  Develop green energy projects in American inner cities.
+
+```{r}
+renderValueBox({
+  
+  valueBox(value = '', icon = "")
+})
+
+```
+
+### Annual Energy Bill (USD)
+
+```{r}
+renderValueBox({
+  bill <- prop_data()
+  #cat(toString(bill))
+  cat(toString(getwd()))
+  valueBox(value = bill$Annual.Energy.Bill..USD., icon = "glyphicon-usd")
+})
+```
+
+### Average Energy Compared to Benchmark
+
+```{r}
+renderValueBox({
+  energyUse <- prop_data()$EnergySurplus
+  valueBox(value = paste0(energyUse,'%'), 
+           icon = "glyphicon-tree-deciduous",
+           color =   ifelse(energyUse < 0, "danger", "success")
+           )
+})
+```
+
+
+
+Row {data-height=600}
+-----------------------------------------------------------------------
+
+### Energy Consumption Map 
+
+```{r}
+
+click_marker <- eventReactive(input$map_marker_click, {
+
+    x <- input$map_marker_click
+    
+    y <-c(x[3], x[4])
+    #cat(toString(y))
+    return(y)
+  })
+
+
+qpal <- colorQuantile("YlGnBu", df$Measured)
+
+output$map <- renderLeaflet({
+
+    map2 <- leaflet(data = df) %>% 
+      addProviderTiles("CartoDB.Positron")%>% 
+      addCircleMarkers(
+          radius = 6,
+          fillColor = ~qpal(df$Measured),fillOpacity = 0.7,
+          stroke = T, weight =2,color='#2b1d0e',
+          popup = paste('Property: ', df$property_name,"<br> Annual Bill: ", df$Annual.Energy.Bill..USD.)) %>% 
+      addLegend(position = "bottomright",na.label = "NA", title="Annual Energy Cost",colors=c('#FFFFD9','#99D6B9','#2280B8','#081D58'), labels = c('< $2,000','$2,000 - $4,000','$4,001- $6,000','$6,000 +'))
+    map2
+})
+
+
+
+prop_data <- reactive({
+  
+  clicked_building <- click_marker()
+  # Fetch data for the clicked tract
+    barchart_values <- df[which(df$Lat == round(as.numeric(clicked_building[1]),5) & df$Long == round(as.numeric(clicked_building[2]),5)),]
+  # barchart_values <- df[which(df$Lat == as.vector(clicked_building[1]) & df$Long == as.vector(clicked_building[2])),]
+cat(toString(barchart_values))
+  return(barchart_values)
+
+})
+
+leafletOutput('map')  
+
+```
+
+### Selected Building Energy Types
+
+```{r}
+
+output$bars <- renderPlotly({
+  barplot_data <- prop_data()
+  #cat(toString(barplot_data))
+  
+  xLabel <- list(
+  title = " "
+ )
+  yLabel <- list(
+  title = "Energy Consumption",
+  showticklabels = F,
+  range = list(0,1)
+) 
+  
+  
+  if(dim(barplot_data)[1] != 0){
+    
+    #print(barplot_data)
+        updated_vals <- c(barplot_data$plug_load_consumption, barplot_data$ac_consumption, barplot_data$domestic_gas, barplot_data$heating_gas)
+      
+      p <- plot_ly(
+        x = c('Plug','AC','Home Gas', 'Heat Gas'),
+        y = updated_vals,
+        name = "Selected Property Values",
+        type = "bar") %>% 
+        layout(xaxis = xLabel, yaxis=yLabel)
+     p 
+  }else{
+      bar_vals <- c(mean(df$plug_load_consumption), mean(df$ac_consumption), mean(df$domestic_gas), mean(df$heating_gas))
+    
+        p <- plot_ly(
+            x =c('Plug','AC','Home Gas', 'Heat Gas'),
+            y = bar_vals,
+            name = "Mean Property Values",
+            type = "bar") %>% 
+            layout(xaxis = xLabel, yaxis=yLabel)
+       p
+  }
+  
+    p2 <- add_trace(
+      p,
+      x =c('Plug','AC','Home Gas', 'Heat Gas'),
+      y = c(mean(df$plug_load_consumption),mean(df$ac_consumption), mean(df$domestic_gas),mean(df$heating_gas)),
+      name = "Mean Values",
+      type = "bar")
+  p2
+  
+})  
+
+plotlyOutput('bars')
+
+```
+
+
+Row {data-height=300}
+-----------------------------------------------------------------------
+
+
+### Sensor Temperature Data - Different Building Locations
+
+```{r}
+  
+dygraph(allTemps)
+
+
+```
+
+
+Cluster Analysis
+=====================================
+
+
+Row
+-----------------------------------------------------------------------
+
+### Energy Consumption Map
+
+```{r}
+
+
+# qualPalette <- c("#d7191c", "#fdae61", "#a6d96a", "#1a9641")
+# clusterLabels <- seq(1:4)
+# df$color <- qualPalette[match(df$kmeans_label, clusterLabels)]
+# qpal2 <- colorFactor(palette=qualPalette, df$kmeans_label)
+
+qualPalette <- c("#1a9641","#d7191c")
+clusterLabels <- seq(1:2)
+df$color <- qualPalette[match(df$ReClustering, clusterLabels)]
+qpal2 <- colorFactor(palette=qualPalette, df$ReClustering)
+
+
+  map2 <- leaflet(data = df) %>% 
+    
+  addProviderTiles("CartoDB.Positron")%>% 
+  addCircleMarkers(
+    lng = df$Long,
+    lat = df$Lat,
+    radius = 6,
+    color = ~qpal2(df$ReClustering),
+    stroke = F, fillOpacity = 0.7,
+    popup = ~property_name)
+
+addLegend(map2,position = "bottomright", colors=qualPalette,labels=c("Efficient","Inefficient"),na.label = "NA", title="Cluster Labels", opacity =0.7)
+map2  
+
+
+```
+
+### Clusters by Heating and Plug Consumption
+
+```{r}
+
+p2 <- figure() %>%
+  ly_points(heating_gas*100, plug_load_consumption*100, data = df,fill_color =color,fill_alpha = 0.6, hover = c(property_name,Annual.Energy.Bill..USD. ),legend_location = "top_right", xlab='Heating Gas', ylab = 'Plug Load Consumption') %>% 
+y_axis(number_formatter = "printf", format = "%d%%") %>% 
+x_axis(number_formatter = "printf", format = "%d%%")
+p2
+
+
+
+```
+
+Predictive Model
+=====================================
+
+Row  {.sidebar data-width=400}
+-----------------------------------------------------------------------
+
+### Predict Energy Use and Cost for New Property
+
+```{r}
+
+#coefficient 1 - Stories
+sliderInput("stories", "Enter number of Stories:",
+            min = 0, max = 4, value = 1, step = 1
+)
+#coefficient 2 - Sq. Foot
+sliderInput("sqft", "Enter Property Square Footage:",
+            min = 0, max = 65000, value = 20000, step = 100
+)
+
+#coefficient 3 - # of Plugged Outlets
+sliderInput("plugged", "Enter Number of Plugged Outlets:",
+            min = 0, max = 43, value = 29, step = 1
+)
+
+
+score <- reactive({
+  scoreProperty(input$stories,input$sqft,input$plugged)
+})
+
+#cat(toString(score[1]))
+ 
+
+```
+
+Row {data-height=200}
+-----------------------------------------------------------------------
+
+
+
+### Predicted Annual Energy Bill (USD @ $0.18/kWh)
+
+```{r}
+renderGauge({
+  bill<- score()[2]
+  gauge(bill, min = 0, max = 100000, symbol = '$', gaugeSectors(
+  success = c(0, 2000), warning = c(2001, 15000), danger = c(15001, 100000)))
+  
+})
+  
+```
+
+### Predicted Annual Energy (kWh)
+
+```{r}
+
+renderGauge({
+  kwh <- score()[1]
+  gauge(kwh, min = 0, max = 380400, gaugeSectors(
+ success = c(0, 100000), warning = c(100001,200000), danger = c(200001,400000)))
+  
+})
+
+```
+
+
+Row 
+-----------------------------------------------------------------------
+
+
+### Accuracy of Linear Regression Fit
+
+```{r}
+
+ p3 <- figure() %>%
+ly_points(Measured ,Predicted, data = df,fill_color = color, fill_alpha=0.6,hover = c(property_name, ReClustering), xlab='Measured Energy Usage', ylab='Predicted Energy Usage') 
+p3<- ly_abline(p3,a=0, b=1, color='blue')
+p3
+
+
+```
+
+Data Table
+=====================================
+
+
+Column 
+-----------------------------------------------------------------------
+
+### Raw Data Table
+
+```{r}
+
+  kable(df)
+
+
+
+```
+
