@@ -1,7 +1,6 @@
 ---
 title: "IBM Data Science Experience"
 runtime: shiny
-logo: scix.png
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -122,13 +121,14 @@ scoreProperty <- function(num_stories,sq_feet, num_plugged_equipment){
     return(c(kWh, usd))
   }
 
+bplogo <- "https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/blocpowertransp.png"
 
 ```
 
 Row {data-height=200}
 -----------------------------------------------------------------------
 
-### ![blocpower](blocpowertransp.png) Build a Better World.  Develop green energy projects in American inner cities.
+### ![blocpower](`r bplogo`) Build a Better World.  Develop green energy projects in American inner cities.
 
 ```{r}
 renderValueBox({
