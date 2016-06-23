@@ -11,15 +11,16 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - If you have not started any Spark services, click the link to create a Spark instance
   - You will need to connect your BlueMix at this time
   - The first part is configuring the Spark instance
-  
-  - The second step is to add a Object Store
-  
-- Once the service is added, go back to your Spark instance and click Manage Object Storage
-
+  ![spark setup](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/sparkSetup.png)
+  - The second step is to add a Object Store, add a container name that is easy to remember
+  ![object store setup](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/objectStoreSetup.png)
+- Once the service is added, go back to your Spark instance and click Manage Object Storage under Actions
+  ![manage object store](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/ManageObjectStorage.png)
 - There will be a card for your object store - click that to go to Bluemix to add your files
 - In Bluemix you will see the container created when the Spark instance was created
 - Click Actions then Add File - you need to add BlocPower_T, CDD-HDD_Features, and HDD_Features
-
+ ![add files in object store](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/addFiles.png)
+ ![files needed](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/files.png)
 - Now you are ready to run a notebook using these data sources
 
 
@@ -33,9 +34,8 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
   ```
     file1 = 'swift://myContainer.spark/BlocPower_T.csv'
  ```
-  If you forgot your container name, click on Data Source on the right side bar and click "Insert to code" for one of the files, this will show the container name
-
-
+- If you forgot your container name, click on Data Source on the right side bar and click "Insert to code" for one of the files, this will show the container name
+![notebook sample code](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/notebook.png)
 - Now you can run each cell to recreate the analysis
 - Follow along each of the following steps:
   - Data cleaning
