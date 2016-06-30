@@ -30,9 +30,9 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - Copy the URL for the Jupyter notebook - https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/BlocPower%20with%20Sparkling.ipynb
 - For the Spark Service, select the service created in step 1 that has the Object Store associated with it, create the notebook
 - To read the data from the right location, the container name chosen in step 1 needs to be inserted in the first three code cells
-- For the code example below, my container was named myContainer:
+- For the code example below, my container was named notebooks (default in Data Science Experience):
   ```
-    file1 = 'swift://myContainer.spark/BlocPower_T.csv'
+    file1 = 'swift://notebooks.spark/BlocPower_T.csv'
  ```
 - If you forgot your container name, click on Data Source on the right side bar and click "Insert to code" for one of the files, this will show the container name
 ![notebook sample code](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/notebook.png)
@@ -49,4 +49,5 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - Paste this code in your new R Markdown document in Data Science Experience
 - Select lines 21 - 65 and execute (This is a one time set up to install all necessary packages)
 - Click the Knit button with the ball of yarn next to it
+- Ignore the error on the pop-up and click the button "Open in Browser" to see the app in a web browser
 - Open the app in a browser to interact with it, share the link with anyone
