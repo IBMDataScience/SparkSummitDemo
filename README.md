@@ -34,8 +34,17 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
   ```
     file1 = 'swift://notebooks.spark/BlocPower_T.csv'
  ```
-- If you forgot your container name, click on Data Source on the right side bar and click "Insert to code" for one of the files, this will show the container name
-![notebook sample code](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/notebook.png)
+- If you forgot your container name, click on Data Source on the right side bar and click "Manage Files".  This will take you to Data Hub where you can see the name of your container.
+- Before you get started, double check that you have all the necessary libraries installed by clicking Environment on the right side panel and review the list of Python libraries. 
+
+ ![environment](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/environment.png)
+
+  - If you are missing one of these libraries you can install it using Python pip installer using the code below where we install ```myLibrary```:
+
+```
+!pip install --user --pre myLibrary
+```
+
 - Now you can run each cell to recreate the analysis
 - Follow along each of the following steps:
   - Data cleaning
