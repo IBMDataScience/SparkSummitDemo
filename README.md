@@ -11,28 +11,6 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 
 #Hands on Lab - World of Watson, October 2016
 
-Session Name: From Lab to Production: Scale Up Your Data Science with IBM Data Science Experience
-
-Date: October 25, 2016, 4:00pm - 6:30pm
-
-Place: Las Vegas, Mandalay Bay - Bayside F - 13
-
-Description: Learn how IBM Data Science Experience can be used in early the stages of a data science project to create models that can then be scaled. By making it easy to change Spark instances with Jupyter notebooks or RStudio, Data Science Experience makes it easy to scale up when you are ready.
-
-Speakers:   
- - Brandon MacKenzie, IBM
- - Greg Filla, IBM
-
-# Contents 
-- [Account Set-up](#set-up)
-- [Create a project](#create-project)
-- [Load data](#load-data)
-- [Import Notebook from GitHub](#importing-notebooks)
-- [Load Object Storage Data in a Notebook](#object-data)
-- [Create decision tree in R](#decision-tree-r)
-- Additional Activities 
- - [Create & Visualize Decision Tree with SPSS in Scala](#spss-tree) 
- 
 # Instructions:
 
 #Step 1. Get on IBM Data Science Experience (DSX).
