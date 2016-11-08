@@ -9,10 +9,6 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 
 # Instructions:
 
-#Hands on Lab - World of Watson, October 2016
-
-# Instructions:
-
 #Step 1. Get on IBM Data Science Experience (DSX).
 ## <a name="set-up"></a>Create an account.
 
