@@ -6,7 +6,8 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 --- 
 
 ###### 1. Data Science Experience Set up
-- First [download the repository](https://github.com/IBMDataScience/SparkSummitDemo/archive/master.zip) to your local environment (you will upload files from the data directory to Object Storage)
+- First [download the repository](https://github.com/IBMDataScience/SparkSummitDemo/archive/master.zip) to your local environment
+- Unzip this zip file on your computer so you have a directory with all the assets in the repository.  We will be using the data from the data directory.  
 - Log-in to Data Science Experience
 - Create a project
 
@@ -24,7 +25,14 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 
  >  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/create-project.png?raw=true" width="512" height="499" />
 
-- Click Actions then Add File - you need to add BlocPower_T, CDD-HDD_Features, and HDD_Features
+- Click on the add data assets + icon
+
+ >  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/add-data-asset.png"/>
+
+- Click on the Add file and select each of the files from the data directory of the downloaded zip: BlocPower_T, CDD-HDD_Features, and HDD_Features
+- Once the file is loaded, click on Apply to add this file to your project.
+- You should now see your 3 files in your project
+
  ![add files in object store](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/addFiles.png)
  ![files needed](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/files.png)
 - Now you are ready to run a notebook using these data sources
@@ -35,7 +43,10 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - Click the tab for From URL, add a Name for the notebook 
 - Copy the URL for the Jupyter notebook - https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/BlocPower%20with%20Sparkling.ipynb
 - For the Spark Service, select the service created in step 1 that has the Object Store associated with it, create the notebook
-- To read the data from the right location, the container name chosen in step 1 needs to be inserted in the first three code cells
+
+>  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/new-notebook.png?raw=true"/>
+
+
 - For the code example below, my container was named notebooks (default in Data Science Experience):
   ```
     file1 = 'swift://notebooks.spark/BlocPower_T.csv'
