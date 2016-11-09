@@ -9,7 +9,7 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - First [download the repository](https://github.com/IBMDataScience/SparkSummitDemo/archive/master.zip) to your local environment
 - Unzip this zip file on your computer so you have a directory with all the assets in the repository.  We will be using the data from the data directory.  
 - Log-in to Data Science Experience
-- ### Create a project
+- #### Create a project
 
 1. Click on the left hand side "hamburger" icon and then click on My Projects to see a list of your projects. You should only see a default project.
 
@@ -20,8 +20,6 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
  >  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/create-new-project.png?raw=true" />
 
 3. Type a name for your project. For instance, "DSX Lab". A Spark service and an object storage will be automatically selected as well as a container with a default name. A container is a directory on the object storage. Click on Create.
-
- > You are now in your new project where you can create notebooks and data assets as well as add collaborators.
 
  >  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/create-project.png?raw=true" width="512" height="499" />
 
@@ -42,7 +40,7 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - Click the tab for From URL, add a Name for the notebook 
 - Copy the URL for the Jupyter notebook - https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/BlocPower%20with%20Sparkling.ipynb
 
->  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/new%20notebook.png?raw=true" width="400"/>
+>  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/new%20notebook.png?raw=true" width="450"/>
 
 - Now you should be in the notebook you loaded from this repository
 - Once you are inside the notebook, you need to insert credentials to access the data you uploaded.
