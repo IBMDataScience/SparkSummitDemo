@@ -5,11 +5,11 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 
 --- 
 
-###### 1. Data Science Experience Set up
+### 1. Data Science Experience Set up
 - First [download the repository](https://github.com/IBMDataScience/SparkSummitDemo/archive/master.zip) to your local environment
 - Unzip this zip file on your computer so you have a directory with all the assets in the repository.  We will be using the data from the data directory.  
 - Log-in to Data Science Experience
-- Create a project
+- ### Create a project
 
 1. Click on the left hand side "hamburger" icon and then click on My Projects to see a list of your projects. You should only see a default project.
 
@@ -37,24 +37,25 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 
 
 
-###### 2. Running Jupyter Notebook
+### 2. Running Jupyter Notebook
 - Click on New Notebook
 - Click the tab for From URL, add a Name for the notebook 
 - Copy the URL for the Jupyter notebook - https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/BlocPower%20with%20Sparkling.ipynb
-- For the Spark Service, select the service created in step 1 that has the Object Store associated with it, create the notebook
 
->  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/new%20notebook.png?raw=true"/>
+>  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/new%20notebook.png?raw=true" width="400"/>
 
 - Now you should be in the notebook you loaded from this repository
 - Once you are inside the notebook, you need to insert credentials to access the data you uploaded.
 - Click inside the blank cell near the top of the notebook (shown in screen shot below)
-- Click on BlocPower_T.csv on the right side to Insert Credentials (if you don't see your files click on this icon: <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/dataicon.png?raw=true" width="62" height="45" /> ) 
+- Click on BlocPower_T.csv on the right side to Insert Credentials 
 
 >  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/addingcredentials.png?raw=true"/>
 
+** If you don't see your files click on this icon: <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/dataicon.png?raw=true" width="40" />  ** 
+
 - After you add the credentials, rename the variable to be called `credentials` in code you added, shown below
 
->  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/code%20snip.png?raw=true"/>
+>  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/code%20snip.png?raw=true" width = "200" />
 
 
 - Now you can run each cell to recreate the analysis
@@ -63,7 +64,7 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
   - Fitting a linear regression model
   - Conducting k-means clustering
 
-###### 3. Running the Shiny App - Flex Dashboard
+### 3. Running the Shiny App - Flex Dashboard
 - Open RStudio in Data Science Experience from the left navigation bar 
 - Create a new R Markdown Document - note you may be required to download some R packages at this time
 - Copy the raw [R Markdown from here](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/shinyDemo.Rmd)
