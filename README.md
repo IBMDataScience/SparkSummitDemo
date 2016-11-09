@@ -33,9 +33,8 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - Once the file is loaded, click on Apply to add this file to your project.
 - You should now see your 3 files in your project
 
- ![add files in object store](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/addFiles.png)
- ![files needed](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/files.png)
-- Now you are ready to run a notebook using these data sources
+ >  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/uploaded-data.png"/>
+
 
 
 ###### 2. Running Jupyter Notebook
@@ -44,23 +43,19 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - Copy the URL for the Jupyter notebook - https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/BlocPower%20with%20Sparkling.ipynb
 - For the Spark Service, select the service created in step 1 that has the Object Store associated with it, create the notebook
 
->  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/new-notebook.png?raw=true"/>
+>  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/new-notebook.png?raw=true"/>
 
+- Now you should be in the notebook you loaded from this repository
+- Once you are inside the notebook, you need to insert credentials to access the data you uploaded.
+- Click inside the blank cell near the top of the notebook (shown in screen shot below)
+- Click on BlocPower_T.csv on the right side to Insert Credentials (if you don't see your files click on this icon: <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/dataicon.png?raw=true"/> ) 
 
-- For the code example below, my container was named notebooks (default in Data Science Experience):
-  ```
-    file1 = 'swift://notebooks.spark/BlocPower_T.csv'
- ```
-- If you forgot your container name, click on Data Source on the right side bar and click "Manage Files".  This will take you to Data Hub where you can see the name of your container.
-- Before you get started, double check that you have all the necessary libraries installed by clicking Environment on the right side panel and review the list of Python libraries. 
+>  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/addingcredentials.png?raw=true"/>
 
- ![environment](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/environment.png)
+- After you add the credentials, rename the variable to be called `credentials` in code you added, shown below
 
-  - If you are missing one of these libraries you can install it using Python pip installer using the code below where we install ```myLibrary```:
+>  <img src="https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/code-snip.png?raw=true"/>
 
-```
-!pip install --user --pre myLibrary
-```
 
 - Now you can run each cell to recreate the analysis
 - Follow along each of the following steps:
