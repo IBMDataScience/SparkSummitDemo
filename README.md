@@ -7,17 +7,23 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 
 ###### 1. Data Science Experience Set up
 - First [download the repository](https://github.com/IBMDataScience/SparkSummitDemo/archive/master.zip) to your local environment (you will upload files from the data directory to Object Storage)
-- Log-in to Data Science Experience and click Start a Notebook
-- If you have not started any Spark services, click the link to create a Spark instance
-  - You will need to connect your BlueMix at this time
-  - The first part is configuring the Spark instance
-  ![spark setup](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/sparkSetup.png)
-  - The second step is to add a Object Store, add a container name that is easy to remember
-  ![object store setup](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/objectStoreSetup.png)
-- Once the service is added, go back to your Spark instance and click Manage Object Storage under Actions
-  ![manage object store](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/ManageObjectStorage.png)
-- There will be a card for your object store - click that to go to Bluemix to add your files
-- In Bluemix you will see the container created when the Spark instance was created
+- Log-in to Data Science Experience
+- Create a project
+
+1. Click on the left hand side "hamburger" icon and then click on My Projects to see a list of your projects. You should only see a default project.
+
+ >  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/my-projects.png?raw=true"/>
+
+2. Click on the create project icon on the top right of the project list.
+
+ >  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/create-new-project.png?raw=true" />
+
+3. Type a name for your project. For instance, "DSX Lab". A Spark service and an object storage will be automatically selected as well as a container with a default name. A container is a directory on the object storage. Click on Create.
+
+ > You are now in your new project where you can create notebooks and data assets as well as add collaborators.
+
+ >  <img src="https://github.com/IBMDataScience/wow-lab-to-production/blob/master/images/create-project.png?raw=true" width="512" height="499" />
+
 - Click Actions then Add File - you need to add BlocPower_T, CDD-HDD_Features, and HDD_Features
  ![add files in object store](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/addFiles.png)
  ![files needed](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/Screenshots/files.png)
