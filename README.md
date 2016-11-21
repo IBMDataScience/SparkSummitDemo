@@ -68,6 +68,7 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 - Copy the raw [R Markdown from here](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/shinyDemo.Rmd)
 - Replace the default content in the new R Markdown file by pasting the code in the file
 - Select lines 21 - 65 and execute (This is a one time set up to install all necessary packages)
-- Click the Knit button with the ball of yarn next to it
-- Ignore the error on the pop-up and click the button "Open in Browser" to see the app in a web browser
+- Click the "Run Document" button to generate the dashboard from the R script
+ - Having popup blockers installed may interfere with launching the dashboard
+ - Click the button "Open in Browser" to see the app in a web browser
 - Open the app in a browser to interact with it, share the link with anyone
