@@ -328,7 +328,7 @@ map2
 ```{r}
 
 p2 <- figure() %>%
-  ly_points(heating_gas*100, plug_load_consumption*100, data = df,fill_color =color,fill_alpha = 0.6, hover = c(property_name,Annual.Energy.Bill..USD. ),legend_location = "top_right", xlab='Heating Gas', ylab = 'Plug Load Consumption') %>% 
+  ly_points(heating_gas*100, plug_load_consumption*100, data = df,fill_color =color,fill_alpha = 0.6, hover = c(property_name,Annual.Energy.Bill..USD. ), xlab='Heating Gas', ylab = 'Plug Load Consumption') %>% 
 y_axis(number_formatter = "printf", format = "%d%%") %>% 
 x_axis(number_formatter = "printf", format = "%d%%")
 p2
@@ -434,4 +434,3 @@ Column
 
 
 ```
-
