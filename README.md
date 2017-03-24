@@ -64,7 +64,10 @@ This repository contains a Python Notebook and R Shiny App created using IBM Dat
 
 ### 3. Running the Shiny App - Flex Dashboard
 - Open RStudio in Data Science Experience from the left navigation bar 
-- Create a new R Markdown Document - note you may be required to download some R packages at this time
+- Create a new R Markdown Document, select Shiny as the type R Markdown document (note you may be required to download some R packages at this time)
+
+>  <img src="https://github.com/IBMDataScience/SparkSummitDemo/blob/master/Screenshots/shiny%20document.png?raw=true" width = "400" />
+
 - Copy the raw [R Markdown from here](https://raw.githubusercontent.com/IBMDataScience/SparkSummitDemo/master/shinyDemo.Rmd)
 - Replace the default content in the new R Markdown file by pasting the code in the file
 - Select lines 21 - 65 and execute (This is a one time set up to install all necessary packages)
